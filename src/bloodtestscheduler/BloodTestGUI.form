@@ -82,7 +82,7 @@
                       <Component id="gpDetailsPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="addPatientBTN" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="29" max="32767" attributes="0"/>
+                      <EmptySpace pref="31" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -100,10 +100,10 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="firstNameLBL" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="ageLBL" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
@@ -117,16 +117,12 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="surnameLBL" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="hWardLBL" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="surnameTF" min="-2" pref="150" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="hWardYesBTN" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="hWardNoBTN" min="-2" max="-2" attributes="0"/>
+                                  <Component id="surnameTF" min="-2" pref="150" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                                  <Component id="hWardCB" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -153,13 +149,9 @@
                               <Component id="priorityLBL" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="priorityTF" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="hWardLBL" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="hWardYesBTN" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="hWardNoBTN" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="hWardCB" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="11" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -205,28 +197,9 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="hWardLBL">
+                <Component class="javax.swing.JCheckBox" name="hWardCB">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Coming From Hospital Ward:"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JRadioButton" name="hWardYesBTN">
-                  <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="hWardBTNGroup"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Yes"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hWardYesBTNActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JRadioButton" name="hWardNoBTN">
-                  <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="hWardBTNGroup"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="No"/>
+                    <Property name="text" type="java.lang.String" value="From Hospital Ward?"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -339,6 +312,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add Patient"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addPatientBTNActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -445,6 +421,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Display All Patients"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayPatientsBTNActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

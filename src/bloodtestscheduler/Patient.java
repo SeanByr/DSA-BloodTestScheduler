@@ -21,10 +21,10 @@ public class Patient {
     //declaring variables for getting the patients gp details
     protected String gpFName, gpSurname;
     protected String gpClinicName;
-    protected String gpPhoneNumber;
+    protected int gpPhoneNumber;
 
     //patient constructor
-    public Patient(String fName, String surname, int age, String priority, boolean hospitalWard, String gpFName, String gpSurname, String gpClinicName, String gpPhoneNumber) {
+    public Patient(String fName, String surname, int age, String priority, boolean hospitalWard, String gpFName, String gpSurname, String gpClinicName, int gpPhoneNumber) {
         this.fName = fName;
         this.surname = surname;
         this.age = age;
@@ -101,12 +101,22 @@ public class Patient {
         this.gpClinicName = gpClinicName;
     }
 
-    public String getGpPhoneNumber() {
+    public int getGpPhoneNumber() {
         return gpPhoneNumber;
     }
 
-    public void setGpPhoneNumber(String gpPhoneNumber) {
+    public void setGpPhoneNumber(int gpPhoneNumber) {
         this.gpPhoneNumber = gpPhoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "First Name: " + fName + ", Surname: " + surname + ", Age: " + age + 
+                "\nPriority: " + priority + ", From Hospital Ward?: " + hospitalWard + 
+                "\nGP First Name: " + gpFName + ", GP Surname: " + gpSurname + 
+                "\nClinic Name: " + gpClinicName + 
+                "\nGP Phone Number: " + gpPhoneNumber +
+                "\n";
     }
     
     
