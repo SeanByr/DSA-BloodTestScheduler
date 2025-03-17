@@ -14,6 +14,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
 
     SLLInterface<Patient> sll;
     PQInterface<Patient> pq;
+    QueueInterface<Patient> queue;
     
     
     
@@ -22,6 +23,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
         
         sll = new SimpleLinkedList();
         pq = new PriorityQueue();
+        queue = new MyQueue();
     }
 
     
@@ -377,7 +379,20 @@ public class BloodTestGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void noShowBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noShowBTNActionPerformed
-        // TODO add your handling code here:
+        noShowTA.setText("");
+        nextPatientTA.setText("");
+        if(!pq.isEmpty()){
+        queue.enqueue(pq.dequeue());
+        noShowTA.append(queue.displayQueue());
+        noShowTA.setCaretPosition(0);
+        
+        nextPatientTA.append(pq.peek());
+        noShowTA.setCaretPosition(0);
+        } else {
+            JOptionPane.showMessageDialog(null, "No Patients in the System");
+        }
+        
+       
     }//GEN-LAST:event_noShowBTNActionPerformed
 
     private void addPatientBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatientBTNActionPerformed
@@ -396,6 +411,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
         Patient temp = new Patient(fName, surname, age, priority, hWard, gpFName, gpSurname, gpClinic, gpPhone);
         
         sll.add(temp);  //adding patient to singly linked list
+        patientListTA.setText("");
         patientListTA.append(sll.print());
         patientListTA.setCaretPosition(0);
         
