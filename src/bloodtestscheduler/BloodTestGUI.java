@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 public class BloodTestGUI extends javax.swing.JFrame {
 
     SLLInterface<Patient> sll;
+    PQInterface<Patient> pq;
     
     
     
@@ -20,6 +21,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
         initComponents();
         
         sll = new SimpleLinkedList();
+        pq = new PriorityQueue();
     }
 
     
@@ -58,9 +60,10 @@ public class BloodTestGUI extends javax.swing.JFrame {
         patientListTA = new javax.swing.JTextArea();
         displayPatientsBTN = new javax.swing.JButton();
         nextPatientPanel = new javax.swing.JPanel();
-        nextPatientTF = new javax.swing.JTextField();
         noShowBTN = new javax.swing.JButton();
         nextPatientBTN = new javax.swing.JButton();
+        nextPatientSP = new javax.swing.JScrollPane();
+        nextPatientTA = new javax.swing.JTextArea();
         noShowPanel = new javax.swing.JPanel();
         noShowSP = new javax.swing.JScrollPane();
         noShowTA = new javax.swing.JTextArea();
@@ -259,10 +262,10 @@ public class BloodTestGUI extends javax.swing.JFrame {
         patientListPanelLayout.setVerticalGroup(
             patientListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(patientListPanelLayout.createSequentialGroup()
-                .addComponent(patientListSP, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(patientListSP, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(displayPatientsBTN)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         nextPatientPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Next Patient"));
@@ -274,33 +277,41 @@ public class BloodTestGUI extends javax.swing.JFrame {
             }
         });
 
-        nextPatientBTN.setText("Display Next Patient");
+        nextPatientBTN.setText("Next Patient");
+        nextPatientBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextPatientBTNActionPerformed(evt);
+            }
+        });
+
+        nextPatientTA.setColumns(20);
+        nextPatientTA.setRows(5);
+        nextPatientSP.setViewportView(nextPatientTA);
 
         javax.swing.GroupLayout nextPatientPanelLayout = new javax.swing.GroupLayout(nextPatientPanel);
         nextPatientPanel.setLayout(nextPatientPanelLayout);
         nextPatientPanelLayout.setHorizontalGroup(
             nextPatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(nextPatientPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nextPatientPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(nextPatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nextPatientTF)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nextPatientPanelLayout.createSequentialGroup()
+                .addGroup(nextPatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(nextPatientSP, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, nextPatientPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(nextPatientBTN)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(noShowBTN)))
                 .addContainerGap())
         );
         nextPatientPanelLayout.setVerticalGroup(
             nextPatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(nextPatientPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(nextPatientTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nextPatientSP, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(nextPatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(noShowBTN)
-                    .addComponent(nextPatientBTN))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(nextPatientBTN)
+                    .addComponent(noShowBTN))
+                .addContainerGap())
         );
 
         noShowPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("List of No-Shows"));
@@ -320,34 +331,32 @@ public class BloodTestGUI extends javax.swing.JFrame {
         );
         noShowPanelLayout.setVerticalGroup(
             noShowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(noShowPanelLayout.createSequentialGroup()
-                .addComponent(noShowSP, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(noShowSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout queuePanelLayout = new javax.swing.GroupLayout(queuePanel);
         queuePanel.setLayout(queuePanelLayout);
         queuePanelLayout.setHorizontalGroup(
             queuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, queuePanelLayout.createSequentialGroup()
-                .addContainerGap(149, Short.MAX_VALUE)
-                .addComponent(patientQueueTitleLBL)
-                .addGap(135, 135, 135))
             .addComponent(patientListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(nextPatientPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(noShowPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, queuePanelLayout.createSequentialGroup()
+                .addContainerGap(144, Short.MAX_VALUE)
+                .addComponent(patientQueueTitleLBL)
+                .addGap(140, 140, 140))
         );
         queuePanelLayout.setVerticalGroup(
             queuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(queuePanelLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(8, 8, 8)
                 .addComponent(patientQueueTitleLBL)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(patientListPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nextPatientPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(noShowPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(nextPatientPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(noShowPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -385,21 +394,69 @@ public class BloodTestGUI extends javax.swing.JFrame {
         int gpPhone = Integer.parseInt(gpPhoneNumberTF.getText());
         
         Patient temp = new Patient(fName, surname, age, priority, hWard, gpFName, gpSurname, gpClinic, gpPhone);
-        sll.add(temp);  //adding patient to singly linked list
         
+        sll.add(temp);  //adding patient to singly linked list
         patientListTA.append(sll.print());
         patientListTA.setCaretPosition(0);
+        
+        
+        pq.enqueue(priorityKey() ,temp); //adding patient to priority queue
+        nextPatientTA.setText(pq.peek());
+        nextPatientTA.setCaretPosition(0);
+        
         
         JOptionPane.showMessageDialog(null, "Patient add to Queue");
         
     }//GEN-LAST:event_addPatientBTNActionPerformed
 
+    public int priorityKey(){ //method for determining the priority of the patients to be seen to first
+        int key = 0;
+        String priority = (String)priorityTF.getSelectedItem();
+        int age = Integer.parseInt(ageTF.getText());
+        boolean hWard = hWardCB.isSelected();
+        
+        if(priority.equals("Urgent")){
+            key += 0;
+        } else if(priority.equals("Medium")){
+            key += 10;
+        } else if(priority.equals("Low")){
+            key += 20;
+        }
+        
+        if(age <= 10){
+            key += 0;
+        } else if(age >= 70){
+            key += 5;
+        } else{
+            key+= 10;
+        }
+        
+        if(!hWard){
+            key += 10;
+        }
+           
+        return key;
+    }
+    
+    
     private void displayPatientsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayPatientsBTNActionPerformed
         patientListTA.setText("");
         patientListTA.append(sll.print());
             
         
     }//GEN-LAST:event_displayPatientsBTNActionPerformed
+
+    private void nextPatientBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextPatientBTNActionPerformed
+        nextPatientTA.setText("");
+        pq.dequeue();
+        if(!pq.isEmpty()){
+        nextPatientTA.append(pq.peek());
+        nextPatientTA.setCaretPosition(0);
+        } else {
+            JOptionPane.showMessageDialog(null, "No Patients in the System");
+        }
+        
+    }//GEN-LAST:event_nextPatientBTNActionPerformed
 
     /**
      * @param args the command line arguments
@@ -457,7 +514,8 @@ public class BloodTestGUI extends javax.swing.JFrame {
     private javax.swing.JTabbedPane menuPanel;
     private javax.swing.JButton nextPatientBTN;
     private javax.swing.JPanel nextPatientPanel;
-    private javax.swing.JTextField nextPatientTF;
+    private javax.swing.JScrollPane nextPatientSP;
+    private javax.swing.JTextArea nextPatientTA;
     private javax.swing.JButton noShowBTN;
     private javax.swing.JPanel noShowPanel;
     private javax.swing.JScrollPane noShowSP;
