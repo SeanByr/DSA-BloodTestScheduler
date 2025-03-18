@@ -54,7 +54,7 @@ public class MyQueue<T> implements QueueInterface<T> {
         return "";
     } else {
         for(int i = 0; i < queue.size(); i++){
-            result += queue.get(i) + "\n";
+            result += "No-Show Patient " + (i+1) + ":\n" + queue.get(i) + "\n";
         }
     }
     return result;

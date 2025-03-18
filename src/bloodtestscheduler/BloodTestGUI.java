@@ -12,15 +12,19 @@ import javax.swing.JOptionPane;
  */
 public class BloodTestGUI extends javax.swing.JFrame {
 
-    SLLInterface<Patient> sll;
-    PQInterface<Patient> pq;
-    QueueInterface<Patient> queue;
+    SLLInterface<Patient> sll; //single linked list for storing all patients in the system
+    
+    PQInterface<Patient> pq; //priority queue for storing all patients in the system
+                             //based on priority("Urgent","Medium","Low"), age and if the patient comes from a hospital ward
+    
+    QueueInterface<Patient> queue; //queue for storing the last 5 patients in the system that are a no-show for there appointment
     
     
     
     public BloodTestGUI() {
         initComponents();
         
+        //initializing ADTs
         sll = new SimpleLinkedList();
         pq = new PriorityQueue();
         queue = new MyQueue();
@@ -237,6 +241,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
 
         patientListPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("List of All Patients"));
 
+        patientListTA.setEditable(false);
         patientListTA.setColumns(20);
         patientListTA.setRows(5);
         patientListSP.setViewportView(patientListTA);
@@ -286,6 +291,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
             }
         });
 
+        nextPatientTA.setEditable(false);
         nextPatientTA.setColumns(20);
         nextPatientTA.setRows(5);
         nextPatientSP.setViewportView(nextPatientTA);
@@ -318,6 +324,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
 
         noShowPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("List of No-Shows"));
 
+        noShowTA.setEditable(false);
         noShowTA.setColumns(20);
         noShowTA.setRows(5);
         noShowSP.setViewportView(noShowTA);
@@ -379,67 +386,106 @@ public class BloodTestGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void noShowBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noShowBTNActionPerformed
+        //if a patient is a no-show
+        //this btn adds the patient to the queue(through enqueue)
+        //and also removes the patient in the priority queue
+        //this is possible due to this queue.enqueue(pq.dequeue());
         noShowTA.setText("");
         nextPatientTA.setText("");
+        
         if(!pq.isEmpty()){
-        queue.enqueue(pq.dequeue());
-        noShowTA.append(queue.displayQueue());
+        queue.enqueue(pq.dequeue()); //adds patient to queue(no-show list) and removes patient from piority queue(next patient)
+        lastFiveNoShow(); //method for dequeuing patient if queue(no-show list) exceeds 5 people
+        noShowTA.append(queue.displayQueue()); //displays current patients in the queue(no-show list)
         noShowTA.setCaretPosition(0);
         
+        if(!pq.isEmpty()){ //second if for displaying next patient in the priority queue(next patient)
         nextPatientTA.append(pq.peek());
         noShowTA.setCaretPosition(0);
-        } else {
+        }
+        } else { //else if the priority queue is empty, display what is currently in the queue(no-show list)
+            noShowTA.append(queue.displayQueue());
+            noShowTA.setCaretPosition(0);
             JOptionPane.showMessageDialog(null, "No Patients in the System");
         }
         
        
     }//GEN-LAST:event_noShowBTNActionPerformed
 
+    public void lastFiveNoShow(){ //method for dequeuing patient if queue(no-show list) exceeds 5 people
+        if(queue.size() > 5){ //dequeue if queue size is greater then 5
+            queue.dequeue();
+        } else {
+            return;
+        }
+    }
+    
     private void addPatientBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatientBTNActionPerformed
-        //patients details
+        //btn for creating/adding/enqueuing patients into the blood test scheduler system
+
+        //get patients details from fields
         String fName = firstNameTF.getText();
         String surname = surnameTF.getText();
-        int age = Integer.parseInt(ageTF.getText());
+        String ageT = ageTF.getText().trim();
         String priority = (String)priorityTF.getSelectedItem();
         boolean hWard = hWardCB.isSelected();
-        //gps details
+        //get gps details from fields
         String gpFName = gpFirstNameTF.getText();
         String gpSurname = gpSurnameTF.getText();
         String gpClinic = gpClinicNameTF.getText();
+        String gpPhoneT = gpPhoneNumberTF.getText().trim();
+        
+        //if for checking if all fields are empty
+        if(fName.trim().isEmpty() || surname.trim().isEmpty() || ageT.isEmpty()
+            || gpFName.trim().isEmpty() || gpSurname.trim().isEmpty() || gpClinic.trim().isEmpty()
+            || gpPhoneT.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Fill in all Fields to Add Patient to the Queue!"); //display msg if 1 or more fields are empty
+            return;
+        } else {
+        
+        //int details seperated in else due to NumberFormatException error
+        int age = Integer.parseInt(ageTF.getText());
         int gpPhone = Integer.parseInt(gpPhoneNumberTF.getText());
         
+        //creates temp Patient obj
         Patient temp = new Patient(fName, surname, age, priority, hWard, gpFName, gpSurname, gpClinic, gpPhone);
         
         sll.add(temp);  //adding patient to singly linked list
         patientListTA.setText("");
-        patientListTA.append(sll.print());
+        patientListTA.append(sll.print()); //adds patients details to the patient list
         patientListTA.setCaretPosition(0);
         
         
         pq.enqueue(priorityKey() ,temp); //adding patient to priority queue
-        nextPatientTA.setText(pq.peek());
+        nextPatientTA.setText(pq.peek()); //displays patient with the highest priority in the pq
         nextPatientTA.setCaretPosition(0);
         
         
-        JOptionPane.showMessageDialog(null, "Patient add to Queue");
-        
+        JOptionPane.showMessageDialog(null, "Patient add to Queue"); //display this msg when patient is added to the queue
+        }
     }//GEN-LAST:event_addPatientBTNActionPerformed
 
     public int priorityKey(){ //method for determining the priority of the patients to be seen to first
-        int key = 0;
+        
+        int key = 0; //the lower the key var, the higher priority a patient has
+        
+        //priorty queue based upon priority selector(Urgent, Medium, Low), age and if patient is currently in a hospital ward
         String priority = (String)priorityTF.getSelectedItem();
         int age = Integer.parseInt(ageTF.getText());
         boolean hWard = hWardCB.isSelected();
-        
-        if(priority.equals("Urgent")){
+        //lower ke
+        if(priority.equals("Urgent")){ //if priority is "Urgent", key set to highest priority value of 0
             key += 0;
-        } else if(priority.equals("Medium")){
+        } else if(priority.equals("Medium")){ //if priority is "Medium", key set to a medium priority value of 10
             key += 10;
-        } else if(priority.equals("Low")){
+        } else if(priority.equals("Low")){ //if priority is "Low", key set to lowest prority value of 20
             key += 20;
         }
         
-        if(age <= 10){
+        //if patient is a child (e.g., <=17), they are given a highest priority key of 0
+        //if patient is an elderly person (e.g., >=70), they are given the next highest priority of 5
+        //if paitent is between the ages of a child and elderly person (e.g., >17 && <70), they are given the lowest priority
+        if(age <= 17){
             key += 0;
         } else if(age >= 70){
             key += 5;
@@ -447,29 +493,38 @@ public class BloodTestGUI extends javax.swing.JFrame {
             key+= 10;
         }
         
+        //if the patient is coming from a hospital ward they get a higher priority key of nothing
+        //else if patient doesnt come from a hospital ward, they get a lower priority key of 10
         if(!hWard){
             key += 10;
         }
            
-        return key;
+        return key; //returns the patients priority key
     }
     
     
     private void displayPatientsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayPatientsBTNActionPerformed
+       //btn for displaying all patient information
+        
+        if(!sll.isEmpty()){ //if the SLL is not empty, display all patients in the system
         patientListTA.setText("");
-        patientListTA.append(sll.print());
-            
+        patientListTA.append(sll.print()); //displays all patients
+       } else {
+           JOptionPane.showMessageDialog(null, "No Patients in the System"); //if no patients are in the system, display this msg
+       }
         
     }//GEN-LAST:event_displayPatientsBTNActionPerformed
 
     private void nextPatientBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextPatientBTNActionPerformed
+       //btn for dequeuing patients from the priority queue as they have shown up and have been seen to
+        
         nextPatientTA.setText("");
-        pq.dequeue();
-        if(!pq.isEmpty()){
-        nextPatientTA.append(pq.peek());
+        pq.dequeue(); //dequeues(removes) patient from priority queue
+        if(!pq.isEmpty()){ //if the priority queue isnt empty, display the next patient in the priority queue
+        nextPatientTA.append(pq.peek()); //displays next patient
         nextPatientTA.setCaretPosition(0);
         } else {
-            JOptionPane.showMessageDialog(null, "No Patients in the System");
+            JOptionPane.showMessageDialog(null, "No Patients in the System"); //if no patients in the priority queue, display this msg
         }
         
     }//GEN-LAST:event_nextPatientBTNActionPerformed

@@ -96,10 +96,12 @@ public class SimpleLinkedList<T> implements SLLInterface<T> {
     @Override
     public String print(){ //method for printing all the elements in the SLL
         StringBuilder sb = new StringBuilder();
+        int i = 1;
         SLLNode<T> temp = head;
         while(temp != null){
-            sb.append(temp.getElement().toString()).append("\n");
+            sb.append("Patient " + i + ":\n" + temp.getElement().toString()).append("\n");
             temp = temp.getNext();
+            i++;
         }
         return sb.toString();
     }
