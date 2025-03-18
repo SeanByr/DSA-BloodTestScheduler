@@ -163,6 +163,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="firstNameTF">
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="firstNameTFKeyPressed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="surnameLBL">
                   <Properties>
@@ -170,6 +173,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="surnameTF">
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="surnameTFKeyPressed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="ageLBL">
                   <Properties>
@@ -177,6 +183,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="ageTF">
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ageTFKeyPressed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="priorityLBL">
                   <Properties>
@@ -284,6 +293,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="gpFirstNameTF">
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="gpFirstNameTFKeyPressed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="gpSurnameLBL">
                   <Properties>
@@ -291,6 +303,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="gpSurnameTF">
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="gpSurnameTFKeyPressed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="gpClinicNameLBL">
                   <Properties>
@@ -298,6 +313,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="gpClinicNameTF">
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="gpClinicNameTFKeyPressed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="gpPhoneNumberLBL">
                   <Properties>
@@ -305,6 +323,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="gpPhoneNumberTF">
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="gpPhoneNumberTFKeyPressed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

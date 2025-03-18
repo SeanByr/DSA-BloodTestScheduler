@@ -4,6 +4,7 @@
  */
 package bloodtestscheduler;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -81,9 +82,27 @@ public class BloodTestGUI extends javax.swing.JFrame {
 
         firstNameLBL.setText("First Name:");
 
+        firstNameTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                firstNameTFKeyPressed(evt);
+            }
+        });
+
         surnameLBL.setText("Surname:");
 
+        surnameTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                surnameTFKeyPressed(evt);
+            }
+        });
+
         ageLBL.setText("Age:");
+
+        ageTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ageTFKeyPressed(evt);
+            }
+        });
 
         priorityLBL.setText("Priority:");
 
@@ -146,11 +165,35 @@ public class BloodTestGUI extends javax.swing.JFrame {
 
         gpFirstNameLBL.setText("First Name:");
 
+        gpFirstNameTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                gpFirstNameTFKeyPressed(evt);
+            }
+        });
+
         gpSurnameLBL.setText("Surname:");
+
+        gpSurnameTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                gpSurnameTFKeyPressed(evt);
+            }
+        });
 
         gpClinicNameLBL.setText("Clinic Name:");
 
+        gpClinicNameTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                gpClinicNameTFKeyPressed(evt);
+            }
+        });
+
         gpPhoneNumberLBL.setText("Phone Number:");
+
+        gpPhoneNumberTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                gpPhoneNumberTFKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout gpDetailsPanelLayout = new javax.swing.GroupLayout(gpDetailsPanel);
         gpDetailsPanel.setLayout(gpDetailsPanelLayout);
@@ -441,6 +484,9 @@ public class BloodTestGUI extends javax.swing.JFrame {
             || gpPhoneT.isEmpty()){
             JOptionPane.showMessageDialog(null, "Fill in all Fields to Add Patient to the Queue!"); //display msg if 1 or more fields are empty
             return;
+        } else if(gpPhoneNumberTF.getText().length() != 10){
+            JOptionPane.showMessageDialog(null, "GP Phone Number Must be 10 characters long!");
+            return;
         } else {
         
         //int details seperated in else due to NumberFormatException error
@@ -460,7 +506,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
         nextPatientTA.setText(pq.peek()); //displays patient with the highest priority in the pq
         nextPatientTA.setCaretPosition(0);
         
-        
+        emptyFields();
         JOptionPane.showMessageDialog(null, "Patient add to Queue"); //display this msg when patient is added to the queue
         }
     }//GEN-LAST:event_addPatientBTNActionPerformed
@@ -502,6 +548,17 @@ public class BloodTestGUI extends javax.swing.JFrame {
         return key; //returns the patients priority key
     }
     
+    public void emptyFields(){ //method for setting all fields to be empty after patients details are submitted
+        //clear patients details
+        firstNameTF.setText("");
+        surnameTF.setText("");
+        ageTF.setText("");
+        //clear patients gp details
+        gpFirstNameTF.setText("");
+        gpSurnameTF.setText("");
+        gpClinicNameTF.setText("");
+        gpPhoneNumberTF.setText("");
+    }
     
     private void displayPatientsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayPatientsBTNActionPerformed
        //btn for displaying all patient information
@@ -528,6 +585,117 @@ public class BloodTestGUI extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_nextPatientBTNActionPerformed
+
+    private void firstNameTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_firstNameTFKeyPressed
+        //error handling for the firstNameTF
+        
+        char keyChar = evt.getKeyChar();
+        int key = evt.getKeyCode();
+        
+        if ((Character.isLetter(keyChar) || key == KeyEvent.VK_BACK_SPACE || evt.isShiftDown() || key == KeyEvent.VK_SPACE) 
+        && firstNameTF.getText().length() < 20) {
+            firstNameTF.setEditable(true);
+        } else {
+                firstNameTF.setEditable(false);
+                JOptionPane.showMessageDialog(null, "Letters Only, 20 character limit.");
+                firstNameTF.setEditable(true);
+                }
+    }//GEN-LAST:event_firstNameTFKeyPressed
+
+    private void surnameTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_surnameTFKeyPressed
+        //error handling for the surnameTF
+        
+        char keyChar = evt.getKeyChar();
+        int key = evt.getKeyCode();
+        
+        if((Character.isLetter(keyChar) || key == KeyEvent.VK_BACK_SPACE || evt.isShiftDown() || key == KeyEvent.VK_SPACE)
+           && surnameTF.getText().length() < 20){
+            surnameTF.setEditable(true);
+        } else {
+            surnameTF.setEditable(false);
+            JOptionPane.showMessageDialog(null, "Letters Only, 20 character limit.");
+            surnameTF.setEditable(true);
+        }
+    }//GEN-LAST:event_surnameTFKeyPressed
+
+    private void ageTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ageTFKeyPressed
+        //error handling for the ageTF
+        
+        char keyChar = evt.getKeyChar();
+        int key = evt.getKeyCode();
+        
+        if((Character.isDigit(keyChar) || key == KeyEvent.VK_BACK_SPACE) && ageTF.getText().length() < 3){
+            ageTF.setEditable(true);
+        } else  {
+            ageTF.setEditable(false);
+            JOptionPane.showMessageDialog(null, "Numbers Only, Max 3 characters long");
+            ageTF.setEditable(true);
+        }
+    }//GEN-LAST:event_ageTFKeyPressed
+
+    private void gpFirstNameTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_gpFirstNameTFKeyPressed
+        //error handling for the gpFirstNameTF
+        
+         char keyChar = evt.getKeyChar();
+        int key = evt.getKeyCode();
+        
+        if ((Character.isLetter(keyChar) || key == KeyEvent.VK_BACK_SPACE || evt.isShiftDown() || key == KeyEvent.VK_SPACE) 
+        && gpFirstNameTF.getText().length() < 20) {
+            gpFirstNameTF.setEditable(true);
+        } else {
+                gpFirstNameTF.setEditable(false);
+                JOptionPane.showMessageDialog(null, "Letters Only, 20 character limit.");
+                gpFirstNameTF.setEditable(true);
+                }
+        
+    }//GEN-LAST:event_gpFirstNameTFKeyPressed
+
+    private void gpSurnameTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_gpSurnameTFKeyPressed
+        //error handling for the gpSurnameTF
+        
+         char keyChar = evt.getKeyChar();
+        int key = evt.getKeyCode();
+        
+        if ((Character.isLetter(keyChar) || key == KeyEvent.VK_BACK_SPACE || evt.isShiftDown() || key == KeyEvent.VK_SPACE) 
+        && gpSurnameTF.getText().length() < 20) {
+            gpSurnameTF.setEditable(true);
+        } else {
+                gpSurnameTF.setEditable(false);
+                JOptionPane.showMessageDialog(null, "Letters Only, 20 character limit.");
+                gpSurnameTF.setEditable(true);
+                }
+    }//GEN-LAST:event_gpSurnameTFKeyPressed
+
+    private void gpClinicNameTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_gpClinicNameTFKeyPressed
+        //error handling for the gpClinicNameTF
+        
+         char keyChar = evt.getKeyChar();
+        int key = evt.getKeyCode();
+        
+        if ((Character.isLetter(keyChar) || key == KeyEvent.VK_BACK_SPACE || evt.isShiftDown() || key == KeyEvent.VK_SPACE) 
+        && gpClinicNameTF.getText().length() < 30) {
+            gpClinicNameTF.setEditable(true);
+        } else {
+                gpClinicNameTF.setEditable(false);
+                JOptionPane.showMessageDialog(null, "Letters Only, 30 character limit.");
+                gpClinicNameTF.setEditable(true);
+                }
+    }//GEN-LAST:event_gpClinicNameTFKeyPressed
+
+    private void gpPhoneNumberTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_gpPhoneNumberTFKeyPressed
+        //error handling for the gpPhoneNumberTF
+        
+        char keyChar = evt.getKeyChar();
+        int key = evt.getKeyCode();
+        
+        if((Character.isDigit(keyChar) || key == KeyEvent.VK_BACK_SPACE) && gpPhoneNumberTF.getText().length() < 10){
+            gpPhoneNumberTF.setEditable(true);
+        } else  {
+            gpPhoneNumberTF.setEditable(false);
+            JOptionPane.showMessageDialog(null, "Numbers Only, Has to be 10 characters long");
+            gpPhoneNumberTF.setEditable(true);
+        }
+    }//GEN-LAST:event_gpPhoneNumberTFKeyPressed
 
     /**
      * @param args the command line arguments
